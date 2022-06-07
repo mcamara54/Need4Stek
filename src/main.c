@@ -17,8 +17,8 @@ char *float_to_string(float a)
 void set_speed(char **ct)
 {
     float distance = atof(ct[16]);
-    float speed = (distance * 1.0 / 1250.0);
-    if (distance > 1250) speed = 1.0;
+    float speed = (distance * 1.0 / 1400.0);
+    if (distance > 1400) speed = 1.0;
     if (distance < 100) speed = 0;
     mputs("CAR_FORWARD:", 0);
     mputs(float_to_string(speed), 1);
@@ -44,19 +44,19 @@ void run_simulation(void)
 {
     int end = 0;
     mputs("START_SIMULATION", 1);
-    get_next_line();
+    mgetline();
 
     while (1) {
         mputs("GET_INFO_LIDAR", 1);
-        char **ct = my_str_to_word_array(get_next_line(), ':');
+        char **ct = my_str_to_word_array(mgetline(), ':');
         for (int i = 0; ct[i]; i++)
-            (strcmp(ct[i], "Track Cleared") == 0 ? end = 1 : 0);
+            (!strcmp(ct[i], "Track Cleared") ? end = 1 : 0);
         if (end == 1)
             break;
         set_speed(ct);
-        get_next_line();
+        mgetline();*
         set_wheels_dir(ct);
-        get_next_line();
+        mgetline();
     }
 
     mputs("STOP_SIMULATION", 1);

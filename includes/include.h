@@ -20,7 +20,7 @@
     #include <getopt.h>
     #include <math.h>
 
-char *get_next_line(void);
+char *mgetline(void);
 
 void mputs(char const *str, int i);
 
